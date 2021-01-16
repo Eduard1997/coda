@@ -7,6 +7,15 @@
         <div class="col-md-6">
           <div class="card mx-4">
             <div class="card-body p-4">
+                @if($errors->any())
+                    <div class="row">
+                        <ul class="alert-box warning radius">
+                            @foreach($errors->all() as $error)
+                                <li> {{ $error }} </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <h1>{{ __('Register') }}</h1>
