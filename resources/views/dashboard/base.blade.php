@@ -37,7 +37,7 @@
     <!-- Icons-->
     <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
     <link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
-    <!-- Main styles for this application-->
+    <!-- Main styles for this applihcation-->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
     @yield('css')
