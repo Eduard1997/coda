@@ -59,6 +59,9 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::get('/modals', function(){   return view('dashboard.notifications.modals'); });
         });
         Route::resource('notes', 'NotesController');
+        Route::prefix('tasks')->group(function() {
+           Route::get('/', 'TasksController@index');
+        });
     });
     Auth::routes();
 
