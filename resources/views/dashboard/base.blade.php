@@ -39,6 +39,12 @@
     <link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
     <!-- Main styles for this applihcation-->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+      <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+      <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+      <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
     @yield('css')
 

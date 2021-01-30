@@ -47,3 +47,7 @@ INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'admin', '
 INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (121, 'user', 71), (122, 'admin', 71);
 CREATE TABLE `coda_db`.`tasks` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `user_id` INT UNSIGNED NOT NULL , `text` TEXT NOT NULL , `priority` SMALLINT(10) NOT NULL COMMENT '1 - normal 2 - medium 3 - high' , `deadline` TIMESTAMP NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ALTER TABLE `tasks` ADD `title` VARCHAR(255) NOT NULL AFTER `user_id`;
+INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id`, `sequence`) VALUES (NULL, 'Messages', '/messages', 'cil-envelope-closed', 'link', NULL, '1', '3');
+INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'user', '72'), (NULL, 'admin', '72');
+ALTER TABLE `tasks` CHANGE `deadline` `deadline` DATE NULL DEFAULT NULL;
+CREATE TABLE `coda_db`.`messages` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `from_id` SMALLINT(50) UNSIGNED NOT NULL , `to_id` SMALLINT(50) UNSIGNED NOT NULL , `text` TEXT NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;

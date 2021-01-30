@@ -11,7 +11,7 @@
                             <i class="fa fa-align-justify"></i>{{ __('Tasks') }}</div>
                         <div class="card-body">
                             <div class="row">
-                                <a href="{{url('/create-task')}}" class="btn btn-primary m-2">{{ __('Add Task') }}</a>
+                                <a href="{{url('/tasks/create-task')}}" class="btn btn-primary m-2">{{ __('Add Task') }}</a>
                             </div>
                             <br>
                             <table class="table table-responsive-sm table-striped">
@@ -40,14 +40,14 @@
                                                 <span class="badge bg-danger">High</span>
                                             @endif
                                         </td>
-                                        <td>{{date('d-m-Y', strtotime($task['deadline']))}}</td>
+                                        <td>{{!empty($task['deadline']) ? date('d-m-Y', strtotime($task['deadline'])) : '-'}}</td>
                                         <td>{{date('d-m-Y', strtotime($task['created_at']))}}</td>
                                         <td>
-                                            <a href="{{ url('/edit-task/' . $task['id']) }}" class="btn btn-block btn-primary">Edit</a>
+                                            <a href="{{ url('/tasks/edit-task/' . $task['id']) }}" class="btn btn-block btn-primary">Edit</a>
                                         </td>
                                         <td>
-                                            <form action="{{url('/delete-task/'. $task['id'])}}" method="POST">
-                                                @method('DELETE')
+                                            <form action="{{url('/tasks/delete-task/'. $task['id'])}}" method="POST">
+                                                @method('POST')
                                                 @csrf
                                                 <button class="btn btn-block btn-danger">Delete</button>
                                             </form>

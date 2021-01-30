@@ -60,7 +60,20 @@ Route::group(['middleware' => ['get.menu']], function () {
         });
         Route::resource('notes', 'NotesController');
         Route::prefix('tasks')->group(function() {
-           Route::get('/', 'TasksController@index');
+           Route::get('/', 'TasksController@index')->name('tasks.index');
+           Route::get('/edit-task/{id}', 'TasksController@editTask');
+           Route::post('/update/{id}', 'TasksController@updateTask');
+           Route::post('/delete-task/{id}', 'TasksController@deleteTask');
+           Route::post('/delete-task/{id}', 'TasksController@deleteTask');
+           Route::get('/create-task', 'TasksController@createTask');
+           Route::post('/post-create-task', 'TasksController@postCreateTask');
+        });
+        Route::prefix('messages')->group(function() {
+            Route::get('/', 'MessagesController@index')->name('messages.index');
+            Route::get('/create-message', 'MessagesController@createMessage')->name('messages.post.create');
+            Route::post('/post-create-message', 'MessagesController@postCreateMessage')->name('messages.create');
+            Route::post('/delete-message/{id}', 'MessagesController@deleteMessage')->name('messages.delete');
+            Route::get('/view-sent-messages', 'MessagesController@getSentMessages')->name('messages.get.sent');
         });
     });
     Auth::routes();

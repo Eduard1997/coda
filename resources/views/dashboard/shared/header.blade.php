@@ -30,13 +30,13 @@
                       <div class="dropdown-header bg-light py-2"><strong>Account</strong></div><a class="dropdown-item" href="#">
                           <svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-bell') }}"></use>
-                          </svg> Updates<span class="badge badge-info ml-auto">42</span></a><a class="dropdown-item" href="#">
-                          <svg class="c-icon mr-2">
+                          </svg> Updates{{--<span class="badge badge-info ml-auto">42</span>--}}</a><a class="dropdown-item" href="#">
+                          {{--<svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-envelope-open') }}"></use>
-                          </svg> Messages<span class="badge badge-success ml-auto">42</span></a><a class="dropdown-item" href="#">
-                          <svg class="c-icon mr-2">
+                          </svg> Messages<span class="badge badge-success ml-auto">42</span></a><a class="dropdown-item" href="#">--}}
+                          {{--<svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-task') }}"></use>
-                          </svg> Tasks<span class="badge badge-danger ml-auto">42</span></a><a class="dropdown-item" href="#">
+                          </svg> Tasks<span class="badge badge-danger ml-auto">42</span></a>--}}{{--<a class="dropdown-item" href="#">--}}
                           {{--<svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-comment-square') }}"></use>
                           </svg> Comments<span class="badge badge-warning ml-auto">42</span></a>--}}
@@ -71,9 +71,21 @@
             @for($i = 1; $i <= count(Request::segments()); $i++)
                 <?php $segments .= '/'. Request::segment($i); ?>
                 @if($i < count(Request::segments()))
-                    <li class="breadcrumb-item">{{ Request::segment($i) }}</li>
+                    <li class="breadcrumb-item">
+                        @if(strpos(Request::segment($i), '-'))
+                            {{ucfirst(str_replace('-', ' ', Request::segment($i)))}}
+                        @else
+                            {{ ucfirst(Request::segment($i)) }}
+                        @endif
+                    </li>
                 @else
-                    <li class="breadcrumb-item active">{{ Request::segment($i) }}</li>
+                    <li class="breadcrumb-item active">
+                        @if(strpos(Request::segment($i), '-'))
+                            {{ucfirst(str_replace('-', ' ', Request::segment($i)))}}
+                        @else
+                            {{ ucfirst(Request::segment($i)) }}
+                        @endif
+                    </li>
                 @endif
             @endfor
           </ol>

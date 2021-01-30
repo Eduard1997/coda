@@ -10,7 +10,7 @@
                     <div class="card-header">
                       <i class="fa fa-align-justify"></i>{{ __('Notes') }}</div>
                     <div class="card-body">
-                        <div class="row"> 
+                        <div class="row">
                           <a href="{{ route('notes.create') }}" class="btn btn-primary m-2">{{ __('Add Note') }}</a>
                         </div>
                         <br>
@@ -23,7 +23,6 @@
                             <th>Applies to date</th>
                             <th>Status</th>
                             <th>Note type</th>
-                            <th></th>
                             <th></th>
                             <th></th>
                           </tr>
@@ -41,9 +40,6 @@
                                   </span>
                               </td>
                               <td><strong>{{ $note->note_type }}</strong></td>
-                              <td>
-                                <a href="{{ url('/notes/' . $note->id) }}" class="btn btn-block btn-primary">View</a>
-                              </td>
                               <td>
                                 <a href="{{ url('/notes/' . $note->id . '/edit') }}" class="btn btn-block btn-primary">Edit</a>
                               </td>
