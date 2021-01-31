@@ -21,6 +21,9 @@ class MessagesController extends Controller
 
     public function index() {
         $messages = Messages::where('to_id', \Auth::user()->id)->with('fromUser')->get()->toArray();
+        if(strpos(\Auth::user()->menuroles, 'admin')) {
+            $messages = Messages::with('fromUser')->with('toUser')->get()->toArray();
+        }
         return view('dashboard.messages.messagesList')->with(['messages' => $messages]);
     }
 

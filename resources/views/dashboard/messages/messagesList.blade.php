@@ -20,6 +20,9 @@
                                 <thead>
                                 <tr>
                                     <th>From</th>
+                                    @if(strpos(\Auth::user()->menuroles, 'admin'))
+                                        <th>To</th>
+                                    @endif
                                     <th>Text</th>
                                     <th>Received</th>
                                     <th></th>
@@ -29,6 +32,9 @@
                                 @foreach($messages as $message)
                                     <tr>
                                         <td>{{$message['from_user']['name']}}</td>
+                                        @if(strpos(\Auth::user()->menuroles, 'admin'))
+                                            <td>{{$message['to_user']['name']}}</td>
+                                        @endif
                                         <td>{{$message['text']}}</td>
                                         <td>{{date('d-m-Y', strtotime($message['created_at']))}}</td>
                                         <td>

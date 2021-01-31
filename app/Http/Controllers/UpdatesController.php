@@ -23,4 +23,9 @@ class UpdatesController extends Controller
         return view('dashboard.siteUpdates.index')->with(['adminUpdates' => $adminUpdates]);
     }
 
+    public function deleteSiteUpdate($id) {
+        AdminUpdates::where('id', $id)->delete();
+        return redirect()->route('site.updates.index');
+    }
+
 }

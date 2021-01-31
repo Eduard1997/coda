@@ -21,6 +21,9 @@ class TasksController extends Controller
 
     public function index() {
         $tasks = Tasks::where('user_id', \Auth::user()->id)->with('user')->get()->toArray();
+        if(strpos(\Auth::user()->menuroles, 'admin')) {
+            $tasks = Tasks::with('user')->get()->toArray();
+        }
         return view('dashboard.tasks.tasks')->with(['tasks' => $tasks]);
     }
 

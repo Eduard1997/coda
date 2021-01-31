@@ -76,10 +76,12 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::get('/view-sent-messages', 'MessagesController@getSentMessages')->name('messages.get.sent');
         });
         Route::prefix('site-updates')->group(function() {
-           Route::get('/','UpdatesController@index');
+           Route::get('/','UpdatesController@index')->name('site.updates.index');
+           Route::post('/delete-site-update/{id}','UpdatesController@deleteSiteUpdate');
         });
         Route::prefix('profile')->group(function() {
            Route::get('/', 'ProfileController@getProfileData');
+           Route::post('/update-profile/{id}', 'ProfileController@updateProfile');
         });
     });
     Auth::routes();

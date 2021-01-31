@@ -32,7 +32,7 @@
                                         <td>{{date('d-m-Y', strtotime($adminUpdate['created_at']))}}</td>
                                         <td>
                                             @if(strpos(\Auth::user()->menuroles, 'admin'))
-                                                <form action="{{url('/messages/delete-message/'. $message['id'])}}" method="POST">
+                                                <form action="{{url('/site-updates/delete-site-update/'. $adminUpdate['id'])}}" method="POST">
                                                     @method('POST')
                                                     @csrf
                                                     <button class="btn btn-block btn-danger">Delete</button>

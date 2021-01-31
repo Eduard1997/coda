@@ -10,7 +10,7 @@
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i> {{ __('Profile Settings') }}</div>
                         <div class="card-body">
-                            <form method="POST" action="/profile/update/{{ $user->id }}">
+                            <form method="POST" action="/profile/update-profile/{{ $user->id }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('POST')
                                 <div class="form-group row">
@@ -23,21 +23,21 @@
                                 <div class="form-group row">
                                     <div class="col">
                                         <label>Email</label>
-                                        <input class="form-control" type="text" placeholder="{{ __('Email') }}" name="user-email" value="{{ $user->email }}" required autofocus>
+                                        <input class="form-control" type="text" placeholder="{{ __('Email') }}" name="user-email" value="{{ $user->email }}" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col">
                                         <label>Change password</label>
-                                        <input class="form-control" type="text" placeholder="{{ __('Password') }}" name="user-password" autofocus>
+                                        <input class="form-control" type="text" placeholder="{{ __('Password') }}" name="user-password">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col">
                                         <label>Picture</label>
-                                        <input class="form-control" type="file" name="user-picture" required autofocus>
+                                        <input class="form-control" type="file" name="user-picture">
                                     </div>
                                 </div>
                                 <button class="btn btn-success" type="submit">{{ __('Save') }}</button>

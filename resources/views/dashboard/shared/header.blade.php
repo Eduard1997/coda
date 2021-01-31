@@ -24,7 +24,7 @@
               </svg></a></li>--}}
           @if(!empty(\Auth::user()))
               <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                      <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/assets/img/avatars/6.jpg') }}" alt="user@email.com"></div>
+                      <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/storage/avatars/' . \Auth::user()->id . '/' . \Auth::user()->profile_picture) }}" alt="user@email.com"></div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right pt-0">
                       {{--<div class="dropdown-header bg-light py-2"><strong>Account</strong></div><a class="dropdown-item" href="#">

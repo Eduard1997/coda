@@ -67,3 +67,7 @@ INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'admin', '
 INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'user', '73');
 UPDATE `menus` SET `icon` = 'cil-cog' WHERE `menus`.`id` = 73;
 ALTER TABLE `users` ADD `profile_picture` VARCHAR(255) NULL DEFAULT NULL AFTER `email_verified_at`;
+DELETE FROM `menus` WHERE `menus`.`id` = 2;
+DELETE FROM `menu_role` WHERE `menu_role`.`id` = 4;
+DELETE FROM `menus` WHERE `menus`.`id` = 60;
+DELETE FROM `menu_role` WHERE `menu_role`.`id` = 112;
