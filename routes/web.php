@@ -75,6 +75,12 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::post('/delete-message/{id}', 'MessagesController@deleteMessage')->name('messages.delete');
             Route::get('/view-sent-messages', 'MessagesController@getSentMessages')->name('messages.get.sent');
         });
+        Route::prefix('site-updates')->group(function() {
+           Route::get('/','UpdatesController@index');
+        });
+        Route::prefix('profile')->group(function() {
+           Route::get('/', 'ProfileController@getProfileData');
+        });
     });
     Auth::routes();
 

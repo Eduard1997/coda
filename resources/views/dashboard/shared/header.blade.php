@@ -27,10 +27,10 @@
                       <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/assets/img/avatars/6.jpg') }}" alt="user@email.com"></div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right pt-0">
-                      <div class="dropdown-header bg-light py-2"><strong>Account</strong></div><a class="dropdown-item" href="#">
+                      {{--<div class="dropdown-header bg-light py-2"><strong>Account</strong></div><a class="dropdown-item" href="#">
                           <svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-bell') }}"></use>
-                          </svg> Updates{{--<span class="badge badge-info ml-auto">42</span>--}}</a><a class="dropdown-item" href="#">
+                          </svg> Updates--}}{{--<span class="badge badge-info ml-auto">42</span>--}}{{--</a><a class="dropdown-item" href="#">--}}
                           {{--<svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-envelope-open') }}"></use>
                           </svg> Messages<span class="badge badge-success ml-auto">42</span></a><a class="dropdown-item" href="#">--}}
@@ -40,7 +40,7 @@
                           {{--<svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-comment-square') }}"></use>
                           </svg> Comments<span class="badge badge-warning ml-auto">42</span></a>--}}
-                      <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="#">
+                      <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="{{url('/profile')}}">
                           <svg class="c-icon mr-2">
                               <use xlink:href="{{ url('/icons/sprites/free.svg#cil-user') }}"></use>
                           </svg> Profile</a>{{--<a class="dropdown-item" href="#">--}}

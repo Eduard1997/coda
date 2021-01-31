@@ -51,3 +51,19 @@ INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id
 INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'user', '72'), (NULL, 'admin', '72');
 ALTER TABLE `tasks` CHANGE `deadline` `deadline` DATE NULL DEFAULT NULL;
 CREATE TABLE `coda_db`.`messages` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `from_id` SMALLINT(50) UNSIGNED NOT NULL , `to_id` SMALLINT(50) UNSIGNED NOT NULL , `text` TEXT NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `admin_updates` (
+    `id` int(10) UNSIGNED NOT NULL,
+    `message` text NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `admin_updates`
+ADD PRIMARY KEY (`id`);
+ALTER TABLE `admin_updates`
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id`, `sequence`) VALUES (NULL, 'Site updates', '/site-updates', 'cil-update', 'link', NULL, '1', '5');
+INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'admin', '73');
+INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'user', '73');
+UPDATE `menus` SET `icon` = 'cil-cog' WHERE `menus`.`id` = 73;
+ALTER TABLE `users` ADD `profile_picture` VARCHAR(255) NULL DEFAULT NULL AFTER `email_verified_at`;
