@@ -11,6 +11,10 @@
 |
 */
 
+Route::prefix('covid')->group(function() {
+    Route::get('/test', 'CoronaController@testRdf');
+});
+
 Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', function () {           return view('dashboard.homepage'); });
 

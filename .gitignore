@@ -30,3 +30,6 @@ composer.phar
 .idea/sqldialects.xml
 composer.lock
 public/mix-manifest.json
+*.iml
+.idea/php.xml
+.idea/coda.iml
