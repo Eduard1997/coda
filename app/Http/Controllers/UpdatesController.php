@@ -28,4 +28,17 @@ class UpdatesController extends Controller
         return redirect()->route('site.updates.index');
     }
 
+    public function createSiteMessage() {
+        return view('dashboard.siteUpdates.createSiteUpdates');
+    }
+
+    public function postCreateSiteMessage() {
+        $data = $this->request->all();
+        AdminUpdates::insert([
+           'message' =>  $data['message']
+        ]);
+        return redirect()->route('site.updates.index');
+    }
+
+
 }

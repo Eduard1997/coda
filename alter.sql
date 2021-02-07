@@ -71,3 +71,16 @@ DELETE FROM `menus` WHERE `menus`.`id` = 2;
 DELETE FROM `menu_role` WHERE `menu_role`.`id` = 4;
 DELETE FROM `menus` WHERE `menus`.`id` = 60;
 DELETE FROM `menu_role` WHERE `menu_role`.`id` = 112;
+CREATE TABLE `countries` (
+    `id` int(10) UNSIGNED NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `slug` varchar(255) NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `countries`
+ADD PRIMARY KEY (`id`);
+ALTER TABLE `countries`
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+ALTER TABLE `countries` ADD `country_code` VARCHAR(255) NOT NULL AFTER `slug`;

@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row">
                                 @if(strpos(\Auth::user()->menuroles, 'admin'))
-                                    <a href="{{url('/updates/create-site-message')}}" class="btn btn-primary m-2">{{ __('Create site message') }}</a>
+                                    <a href="{{url('/site-updates/create-site-message')}}" class="btn btn-primary m-2">{{ __('Create site message') }}</a>
                                 @endif
                             </div>
                             <br>

@@ -16,7 +16,7 @@ Route::prefix('covid')->group(function() {
 });
 
 Route::group(['middleware' => ['get.menu']], function () {
-    Route::get('/', function () {           return view('dashboard.homepage'); });
+    Route::get('/', 'HomeController@renderHomePage');
 
     Route::group(['middleware' => ['role:user']], function () {
         Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -82,6 +82,8 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::prefix('site-updates')->group(function() {
            Route::get('/','UpdatesController@index')->name('site.updates.index');
            Route::post('/delete-site-update/{id}','UpdatesController@deleteSiteUpdate');
+           Route::get('/create-site-message','UpdatesController@createSiteMessage');
+           Route::post('/post-create-site-message','UpdatesController@postCreateSiteMessage');
         });
         Route::prefix('profile')->group(function() {
            Route::get('/', 'ProfileController@getProfileData');
