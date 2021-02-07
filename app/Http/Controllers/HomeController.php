@@ -6,6 +6,7 @@ use App\Models\Countries;
 use EasyRdf\Graph;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
+use PHPUnit\TextUI\Help;
 
 class HomeController extends Controller
 {
@@ -21,32 +22,28 @@ class HomeController extends Controller
     }
 
     public function renderHomePage() {
-
         $rdfDatabaseData = file_get_contents(storage_path("app\public\RDF\database.rdf"), true);
         $countrySummary = [];
         if(strlen($rdfDatabaseData) == 0) {
             $url = "https://api.covid19api.com/summary";
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $url);
-            $result = curl_exec($ch);
-            $summaryResults = json_decode($result, true);
+            $summaryResults = json_decode(Helper::curl($url), true);
 
-            if(Countries::get()->count() == 0) {
-                foreach ($summaryResults['Countries'] as $result) {
+            Helper::saveGlobalCasesToRdf($summaryResults['Global']);
+
+            foreach ($summaryResults['Countries'] as $result) {
+                if(Countries::get()->count() == 0){
                     Countries::insert([
                         'name' => $result['Country'],
                         'slug' => $result['Slug'],
                         'country_code' => $result['CountryCode']
                     ]);
+                }
 
-                    if($result['Country'] == 'Romania' || $result['Country'] == 'Italy' || $result['Country'] == 'Germany' || $result['Country'] == 'Austria') {
-                        Helper::saveCountrySummaryRdf($result);
-                        array_push($countrySummary, $result);
-                    }
+                if($result['Country'] == 'Romania' || $result['Country'] == 'Italy' || $result['Country'] == 'Germany' || $result['Country'] == 'Austria') {
+                    Helper::saveCountrySummaryRdf($result);
+                    array_push($countrySummary, $result);
                 }
             }
-            Helper::saveGlobalCasesToRdf($summaryResults['Global']);
 
             $data = [];
             $data['new_confirmed'] = $summaryResults['Global']['NewConfirmed'];
@@ -59,8 +56,7 @@ class HomeController extends Controller
             $countrySummary = Helper::getCountrySummaryRdf();
         }
 
-
-        return view('dashboard.homepage')->with(['summaryData' => $data]);
+        return view('dashboard.homepage')->with(['summaryData' => $data, 'countrySummary' => $countrySummary]);
     }
 
 }
