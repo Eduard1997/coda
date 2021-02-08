@@ -10,8 +10,8 @@
                             <img class="card-img-top" src="{{url('assets/brand/CODA_LOGO_LONG.png')}}" style="width: 300px; margin: 10px auto 0;"/>
                             <div class="card-body">
                                 <h5 class="card-title">Welcome to CODA!</h5>
-                                <p class="card-text">CODA stands for COVID-19 Data for All. It is a smart micro-service-based application that is able to provide information regarding the Covid-19 pandemic in multiple written and visual formats for both specialists and the general public. CODA’s goal is to keep everyone informed about the pandemic in a fast and easy manner and avoid spreading misinformation to the general public.</p>
-                                <p class="card-text">Please sign up to enjoy our full features! Below you can see only a small part of our data.</p>
+                                <p class="card-text">CODA(COVID-19 Data for All) it is a  "smart" (micro-)service-based Web system able to provide for both specialists and general public support for studying, visualizing, and sharing the most authoritative and useful knowledge about this disease, including important advices, regional statistics and evolution</p>
+                               @if(empty(\Auth::user())) <p class="card-text">Please sign up to enjoy our full features! Below you can see only a small part of our data.</p> @endif
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,17 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="card">
-                    <div class="card-header">Summary</div>
+                    <div class="card-header">
+                        <span>Summary</span>
+                        <div class="text-right">
+                            <span data-toggle="tooltip" data-placement="top" title="Download CSV" class="download-csv-dashboard">
+                                <i class="cil-cloud-download" style="font-size: 22px; cursor: pointer; color: #3399ff;"></i>
+                            </span>
+                            <span data-toggle="tooltip" data-placement="top" title="Download JSON" class="download-json-dashboard">
+                                <i class="cil-data-transfer-down" style="font-size: 22px; cursor: pointer; color: #3399ff;"></i>
+                            </span>
+                        </div>
+                    </div>
                     <div class="card-body">
                       <div class="row">
                         <div class="col-sm-6">
@@ -542,4 +552,15 @@
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/coreui-chartjs.bundle.js') }}"></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+        $(document).on('click', '.download-csv-dashboard', function() {
+            window.location.href = '/download/download-dashboard-csv';
+        });
+        $(document).on('click', '.download-json-dashboard', function() {
+            window.location.href = '/download/download-dashboard-json';
+        });
+    </script>
 @endsection

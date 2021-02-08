@@ -89,6 +89,12 @@ Route::group(['middleware' => ['get.menu']], function () {
            Route::get('/', 'ProfileController@getProfileData');
            Route::post('/update-profile/{id}', 'ProfileController@updateProfile');
         });
+        Route::prefix('/download')->group(function() {
+            Route::get('/', 'ProfileController@getProfileData');
+            Route::post('/update-profile/{id}', 'ProfileController@updateProfile');
+            Route::get('/download-dashboard-csv', 'HomeController@downloadDashboardCsv');
+            Route::get('/download-dashboard-json', 'HomeController@downloadDashboardJSON');
+        });
     });
     Auth::routes();
 
