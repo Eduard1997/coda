@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function renderHomePage() {
         $rdfDatabaseData = file_get_contents(storage_path("app\public\RDF\database.rdf"), true);
         $countrySummary = [];
+
         if(strlen($rdfDatabaseData) == 0) {
             $url = "https://api.covid19api.com/summary";
             $summaryResults = json_decode(Helper::curl($url), true);

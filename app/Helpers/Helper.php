@@ -19,7 +19,7 @@ class Helper
             '<foaf:NewDeaths>' . $data['NewDeaths'] . '</foaf:NewDeaths>' . PHP_EOL .
             '<foaf:TotalDeaths>' . $data['TotalDeaths'] . '</foaf:TotalDeaths>' . PHP_EOL .
             '<foaf:NewRecovered>' . $data['NewRecovered'] . '</foaf:NewRecovered>' . PHP_EOL .
-            '<foaf:TotalRecovered>' . $data['NewConfirmed'] . '</foaf:TotalRecovered>' . PHP_EOL .
+            '<foaf:TotalRecovered>' . $data['TotalRecovered'] . '</foaf:TotalRecovered>' . PHP_EOL .
             '</foaf:GlobalCases>' . PHP_EOL;
 
         file_put_contents(storage_path("app\public\RDF\database.rdf"), $dbContents, FILE_APPEND);
