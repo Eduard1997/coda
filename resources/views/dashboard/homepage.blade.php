@@ -4,6 +4,18 @@
 
           <div class="container-fluid">
             <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-3">
+                            <img class="card-img-top" src="{{url('assets/brand/CODA_LOGO_LONG.png')}}" style="width: 300px; margin: 10px auto 0;"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Welcome to CODA!</h5>
+                                <p class="card-text">CODA stands for COVID-19 Data for All. It is a smart micro-service-based application that is able to provide information regarding the Covid-19 pandemic in multiple written and visual formats for both specialists and the general public. CODA’s goal is to keep everyone informed about the pandemic in a fast and easy manner and avoid spreading misinformation to the general public.</p>
+                                <p class="card-text">Please sign up to enjoy our full features! Below you can see only a small part of our data.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               <div class="row">
                 <div class="col-sm-6 col-lg-3">
                   <div class="card text-white bg-primary">
