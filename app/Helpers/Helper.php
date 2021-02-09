@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 use EasyRdf\Graph;
+use EasyRdf\Literal\Date;
 
 class Helper
 {
@@ -103,6 +104,80 @@ class Helper
         array_push($data, $firstCountry);
 
         return $data;
+    }
+
+    public static function getEvolutionFromRdf($argData) {
+        $globalRdfContent = file_get_contents(storage_path("app\public\RDF\database.rdf"), true);
+        $graph = new Graph();
+        $graph->parse($globalRdfContent);
+        $data = [];
+        $fromDate = new \DateTime($argData['date_from']);
+        $toDate = new \DateTime($argData['date_to']);
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period = new \DatePeriod($fromDate, $interval, $toDate);
+        $countriesFound = [];
+        $casesFound = [];
+        $combinedResults = [];
+        $finalCases = [];
+        $finalDates = [];
+
+        $diff = $toDate->diff($fromDate)->format('%a');
+        if($diff == "1") {
+            $date = str_replace('-', '', $argData['date_to']);
+            array_push($countriesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:CountryEvolutionName' . $date));
+            array_push($casesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:SummaryCountryCases' . $date));
+            array_push($finalDates,  $argData['date_to']);
+        } else {
+            $fromDate = new \DateTime($argData['date_from']);
+            $toDate = new \DateTime($argData['date_to']);
+            $toDate->add(\DateInterval::createFromDateString('1 day'));
+            $interval = \DateInterval::createFromDateString('1 day');
+            $period = new \DatePeriod($fromDate, $interval, $toDate);
+            foreach ($period as $dt) {
+                array_push($finalDates,  $dt->format("Y-m-d"));
+                $date = str_replace('-', '', $dt->format("Y-m-d"));
+                if(!empty($graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:CountryEvolutionName' . $date))) {
+                    array_push($countriesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:CountryEvolutionName' . $date));
+                }
+                if(!empty($graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:SummaryCountryCases' . $date))) {
+                    array_push($casesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:SummaryCountryCases' . $date));
+                }
+            }
+        }
+
+        foreach ($countriesFound as $key => $countryFound) {
+            foreach ($countryFound as $key2 => $cf) {
+                $temp = [];
+                $temp['country'] = $cf->getValue();
+                $temp['cases_found'] = $casesFound[$key][$key2]->getValue();
+                array_push($combinedResults, $temp);
+            }
+        }
+
+        foreach ($combinedResults as $cr) {
+            if($cr['country'] == $argData['country_name']) {
+                array_push($finalCases, $cr['cases_found']);
+            }
+        }
+
+        return ['cases' => $finalCases, 'dates' => $finalDates];
+    }
+
+    public static function saveEvolutionToRdf($data) {
+        $currentRdfDatabase = file_get_contents(storage_path("app\public\RDF\database.rdf"), true);
+        $newContent = str_replace('</rdf:RDF>', '', $currentRdfDatabase);
+        $newContent .= '<foaf:CountriesEvolution rdf:about="http://localhost:8000/storage/RDF/database.rdf">' . PHP_EOL;
+        foreach ($data as $evolution) {
+            $date = str_replace('-', ' ', $evolution['Date']);
+            $date = str_replace('T00:00:00Z', '', $date);
+            $date = str_replace(' ', '', $date);
+            $newContent .=
+                '<foaf:CountryEvolutionName' .$date . '>' . $evolution['Country'] . '</foaf:CountryEvolutionName' . $date . '>' . PHP_EOL .
+                '<foaf:SummaryCountryCases' . $date . '>' . $evolution['Cases'] . '</foaf:SummaryCountryCases' . $date . '>' . PHP_EOL;
+        }
+        $newContent.='</foaf:CountriesEvolution>' . PHP_EOL . '</rdf:RDF>';
+        file_put_contents(storage_path("app\public\RDF\database.rdf"), $newContent);
+        chmod(storage_path("app\public\RDF\database.rdf"), 0664);
     }
 
     public static function curl($url) {

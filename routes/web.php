@@ -95,6 +95,11 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::get('/download-dashboard-csv', 'HomeController@downloadDashboardCsv');
             Route::get('/download-dashboard-json', 'HomeController@downloadDashboardJSON');
         });
+        Route::prefix('/statistics')->group(function() {
+            Route::get('/', 'StatisticsController@index');
+            Route::get('/get-global-cases-chart', 'StatisticsController@getGlobalCasesChart');
+            Route::get('/get-country-evolution', 'StatisticsController@getEvolutionConfirmedCases');
+        });
     });
     Auth::routes();
 

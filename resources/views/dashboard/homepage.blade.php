@@ -143,14 +143,16 @@
                   <div class="card">
                     <div class="card-header">
                         <span>Summary</span>
+                        @if(!empty(\Auth::user()))
                         <div class="text-right">
-                            <span data-toggle="tooltip" data-placement="top" title="Download CSV" class="download-csv-dashboard">
+                            <span data-toggle="tooltip" data-placement="top" title="Download CSV" class="download-csv-dashboard mr-2">
                                 <i class="cil-cloud-download" style="font-size: 22px; cursor: pointer; color: #3399ff;"></i>
                             </span>
                             <span data-toggle="tooltip" data-placement="top" title="Download JSON" class="download-json-dashboard">
                                 <i class="cil-data-transfer-down" style="font-size: 22px; cursor: pointer; color: #3399ff;"></i>
                             </span>
                         </div>
+                        @endif
                     </div>
                     <div class="card-body">
                       <div class="row">
@@ -186,10 +188,10 @@
                                             $secondIsBigger = true;
                                         }
                                   @endphp
-                                <div class="progress-bar bg-info" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[0]['TotalConfirmed'])}}" class="progress-bar bg-info" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                               <div class="progress progress-xs">
-                                <div class="progress-bar bg-danger" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[1]['TotalConfirmed'])}}" class="progress-bar bg-danger" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                             </div>
                           </div>
@@ -208,10 +210,10 @@
                                           $secondIsBigger = true;
                                       }
                                   @endphp
-                                  <div class="progress-bar bg-info" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                  <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[0]['TotalDeaths'])}}" class="progress-bar bg-info" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                               <div class="progress progress-xs">
-                                  <div class="progress-bar bg-danger" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                  <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[1]['TotalDeaths'])}}" class="progress-bar bg-danger" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                             </div>
                           </div>
@@ -249,10 +251,10 @@
                                                 $secondIsBigger = true;
                                             }
                                         @endphp
-                                        <div class="progress-bar bg-warning" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[2]['TotalConfirmed'])}}" class="progress-bar bg-warning" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="progress progress-xs">
-                                        <div class="progress-bar bg-success" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[3]['TotalConfirmed'])}}" class="progress-bar bg-success" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -271,10 +273,10 @@
                                                 $secondIsBigger = true;
                                             }
                                         @endphp
-                                        <div class="progress-bar bg-warning" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[2]['TotalDeaths'])}}" class="progress-bar bg-warning" role="progressbar" @if($firstIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="progress progress-xs">
-                                        <div class="progress-bar bg-success" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div data-toggle="tooltip" data-placement="top" title="{{number_format($countrySummary[3]['TotalDeaths'])}}" class="progress-bar bg-success" role="progressbar" @if($secondIsBigger) style="width: 100%;" @else style="width: {{$minPercentStyle}}%;" @endif aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>

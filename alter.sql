@@ -84,3 +84,5 @@ ALTER TABLE `countries`
     MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 ALTER TABLE `countries` ADD `country_code` VARCHAR(255) NOT NULL AFTER `slug`;
+INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id`, `sequence`) VALUES (NULL, 'Statistics', '/statistics', 'cil-chart', 'link', NULL, '1', '5');
+INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES (NULL, 'user', '74'), (NULL, 'admin', '74');
