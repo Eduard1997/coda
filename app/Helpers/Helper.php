@@ -180,6 +180,95 @@ class Helper
         chmod(storage_path("app\public\RDF\database.rdf"), 0664);
     }
 
+    public static function getOtherStatisticsChart($argData) {
+        $globalRdfContent = file_get_contents(storage_path("app\public\RDF\database.rdf"), true);
+        $graph = new Graph();
+        $graph->parse($globalRdfContent);
+        $data = [];
+        $fromDate = new \DateTime($argData['date_from']);
+        $toDate = new \DateTime($argData['date_to']);
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period = new \DatePeriod($fromDate, $interval, $toDate);
+        $countriesFound = [];
+        $recoveredCasesFound = [];
+        $confirmedCasesFound = [];
+        $deathsCasesFound = [];
+        $combinedResults = [];
+        $finalCases = [];
+        $finalDates = [];
+
+        $diff = $toDate->diff($fromDate)->format('%a');
+        if($diff == "1") {
+            $date = str_replace('-', '', $argData['date_to']);
+            array_push($countriesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:CountryOtherStatisticsName' . $date));
+            array_push($recoveredCasesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryRecovered' . $date));
+            array_push($confirmedCasesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryConfirmed' . $date));
+            array_push($deathsCasesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryDeaths' . $date));
+            array_push($finalDates,  $argData['date_to']);
+        } else {
+            $fromDate = new \DateTime($argData['date_from']);
+            $toDate = new \DateTime($argData['date_to']);
+            $toDate->add(\DateInterval::createFromDateString('1 day'));
+            $interval = \DateInterval::createFromDateString('1 day');
+            $period = new \DatePeriod($fromDate, $interval, $toDate);
+            foreach ($period as $dt) {
+                array_push($finalDates,  $dt->format("Y-m-d"));
+                $date = str_replace('-', '', $dt->format("Y-m-d"));
+                if(!empty($graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:CountryOtherStatisticsName' . $date))) {
+                    array_push($countriesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:CountryOtherStatisticsName' . $date));
+                }
+                if(!empty($graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryRecovered' . $date))) {
+                    array_push($recoveredCasesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryRecovered' . $date));
+                }
+                if(!empty($graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryConfirmed' . $date))) {
+                    array_push($confirmedCasesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryConfirmed' . $date));
+                }
+                if(!empty($graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryDeaths' . $date))) {
+                    array_push($deathsCasesFound, $graph->allLiterals('http://localhost:8000/storage/RDF/database.rdf','foaf:OtherStatisticsCountryDeaths' . $date));
+                }
+            }
+        }
+
+        foreach ($countriesFound as $key => $countryFound) {
+            foreach ($countryFound as $key2 => $cf) {
+                $temp = [];
+                $temp['country'] = $cf->getValue();
+                $temp['recoveredCases'] = $recoveredCasesFound[$key][$key2]->getValue();
+                $temp['confirmedCases'] = $confirmedCasesFound[$key][$key2]->getValue();
+                $temp['deathsCases'] = $deathsCasesFound[$key][$key2]->getValue();
+                array_push($combinedResults, $temp);
+            }
+        }
+        if(!empty($combinedResults) && $combinedResults[0]['country'] == $argData['country_name']) {
+            return ['cases' => $combinedResults, 'dates' => $finalDates];
+        } else {
+            return ['cases' => [], 'dates' => $finalDates];
+        }
+
+    }
+
+    public static function saveOtherStatisticsChart($data, $date_from, $date_to) {
+        $currentRdfDatabase = file_get_contents(storage_path("app\public\RDF\database.rdf"), true);
+        $newContent = str_replace('</rdf:RDF>', '', $currentRdfDatabase);
+        $newContent .= '<foaf:CountriesOtherStatistics rdf:about="http://localhost:8000/storage/RDF/database.rdf">' . PHP_EOL;
+        foreach ($data as $evolution) {
+            $recordDate = str_replace('T00:00:00Z', '', $evolution['Date']);
+            if($recordDate >= $date_from && $recordDate <= $date_to) {
+                $date = str_replace('-', ' ', $evolution['Date']);
+                $date = str_replace('T00:00:00Z', '', $date);
+                $date = str_replace(' ', '', $date);
+                $newContent .=
+                    '<foaf:CountryOtherStatisticsName' .$date . '>' . $evolution['Country'] . '</foaf:CountryOtherStatisticsName' . $date . '>' . PHP_EOL .
+                    '<foaf:OtherStatisticsCountryRecovered' . $date . '>' . $evolution['Recovered'] . '</foaf:OtherStatisticsCountryRecovered' . $date . '>' . PHP_EOL .
+                    '<foaf:OtherStatisticsCountryConfirmed' . $date . '>' . $evolution['Confirmed'] . '</foaf:OtherStatisticsCountryConfirmed' . $date . '>' . PHP_EOL .
+                    '<foaf:OtherStatisticsCountryDeaths' . $date . '>' . $evolution['Deaths'] . '</foaf:OtherStatisticsCountryDeaths' . $date . '>' . PHP_EOL;
+            }
+        }
+        $newContent.='</foaf:CountriesOtherStatistics>' . PHP_EOL . '</rdf:RDF>';
+        file_put_contents(storage_path("app\public\RDF\database.rdf"), $newContent);
+        chmod(storage_path("app\public\RDF\database.rdf"), 0664);
+    }
+
     public static function curl($url) {
         $agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0';
         $ch = curl_init();
